@@ -1,3 +1,7 @@
+// lab 32 | ali saeed | comsc-210
+//ide used: vs code
+//pretty easy assignment( if i did it right)
+
 #include "Car.h"
 #include <iostream>
 #include <deque>
@@ -28,9 +32,20 @@ int main() {
         
         //55 percent car leave
         if (num < 55) {
-            cout << 
+            cout << "Time " << count << " Operation: Car paid: ";
+            carDeque.front().print();
+            carDeque.pop_front();
+        }
+        // 45 percent is the other like if it is above or equal to 55
+        else {
+            Car addedCar = Car();
+            carDeque.push_back(addedCar);
+            cout << "Time " << count << " Operation: Joined lane: ";
+            addedCar.print();
         }
 
+        cout << "Queue:\n";
+        outputDeque(carDeque);
     }
 
     return 0;
@@ -44,4 +59,5 @@ void outputDeque(deque<Car>& carDeque) {
         cout << "\t";
         temp.print();
     }
+    cout << "\n";
 }
