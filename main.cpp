@@ -4,48 +4,43 @@
 
 #include "Car.h"
 #include <iostream>
+#include <array>
 #include <deque>
 
 using namespace std;
 
-const int INITIAL = 2;
+const int INITIAL = 3;
+const int PAYS = 46;
+const int JOINS = 39;
+const int SHIFTS = 15;
+const int BOOTHS = 4;
+const int TRIALS = 20;
 
 void outputDeque(deque<Car>&);
 
 int main() {
     srand(time(0));
 
-    deque<Car> carDeque;
+    array<deque<Car>, BOOTHS> tollBooths;
 
-    for (int i = 0; i < INITIAL; i++) {
-        carDeque.push_back(Car());
+    for (int i = 0; i < BOOTHS; i++) {
+        int populate = rand() % 3 + 1;
+        for (int j = 0; j < populate; j++) {
+            tollBooths[i].push_back(Car());
+        }
     }
+
     cout << "Initial queue:\n";
 
-    outputDeque(carDeque);
+    //outputDeque(carDeque);
 
-    int count = 0;
-    while (!carDeque.empty()) {
-        count++;
-
-        int num = rand() % 100;
-        
-        //55 percent car leave
-        if (num < 55) {
-            cout << "Time " << count << " Operation: Car paid: ";
-            carDeque.front().print();
-            carDeque.pop_front();
+    //num of trials
+    for (int i = 0; i < TRIALS; i++) {
+        cout << "Time: " << i+1 << endl;
+        //go thru all toll booths
+        for (int j = 0; j < BOOTHS; j++) {
+            if ()
         }
-        // 45 percent is the other like if it is above or equal to 55
-        else {
-            Car addedCar = Car();
-            carDeque.push_back(addedCar);
-            cout << "Time " << count << " Operation: Joined lane: ";
-            addedCar.print();
-        }
-
-        cout << "Queue:\n";
-        outputDeque(carDeque);
     }
 
     return 0;
