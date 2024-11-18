@@ -16,7 +16,7 @@ const int SHIFTS = 15;
 const int BOOTHS = 4;
 const int TRIALS = 20;
 
-void outputDeque(deque<Car>&);
+void outputBooths(array<deque<Car>, BOOTHS>);
 
 int main() {
     srand(time(0));
@@ -32,7 +32,7 @@ int main() {
 
     cout << "Initial queue:\n";
 
-    //outputDeque(carDeque);
+    outputBooths(tollBooths);
 
     //num of trials
     for (int i = 0; i < TRIALS; i++) {
@@ -45,8 +45,8 @@ int main() {
                 if (rand() % 100 < 50) {
                     Car new_addition = Car();
                     tollBooths[j].push_back(new_addition);
-                    cout << "\tLane " << j + 1 << " Joined (Empty Queue): \n";
-                    //fix output so i can print the car that 
+                    cout << "Lane " << j + 1 << " Joined (Empty Queue): \n";
+                    new_addition.print();
                 }
             }
 
@@ -55,7 +55,7 @@ int main() {
             //prob for paying and leaving
             if (rng < PAYS) {
                 cout << "Lane: " << j + 1 << " Paid: ";
-                //print the car from the front
+                tollBooths[j].front().print();
                 tollBooths[j].pop_front(); //eliminate from teh queue
             }
             //prob for joining, works since the first check
@@ -63,7 +63,7 @@ int main() {
                 Car new_car = Car();
                 tollBooths[j].push_back(new_car);
                 cout << "Lane: " << j + 1 << " Joined: ";
-                //output
+                new_car.print();
             }
             //prob for shifting lanes
             else {
@@ -74,31 +74,40 @@ int main() {
 
                     int new_lane;
 
+                    //make sure its a different lane, dont wanna stay in the same
                     while (new_lane == j) {
                         new_lane = rand() % BOOTHS;
                     }
 
                     tollBooths[new_lane].push_back(lane_changer);
                     cout << "Lane " << j + 1 << " Switched: ";
-                    //output the car
+                    lane_changer.print();
                     //doesnt need any more output (based on example output)
                 }
 
             }
 
         }
+        //output status end of each trial
+        outputBooths(tollBooths);
     }
 
     return 0;
 }
 
-void outputDeque(deque<Car>& carDeque) {
-    if (carDeque.empty()) {
-        cout << "\tEmpty\n";
+void outputBooths(array<deque<Car>, BOOTHS> tollBooths) {
+    for (int i = 0; i < BOOTHS; i++) {
+        cout << "\tLane " << i + 1 << " Queue:";
+        if (tollBooths[i].empty()) {
+            cout << " empty\n";
+        }
+        else {
+            for (Car& temp : tollBooths[i]) {
+                cout << endl;
+                cout << "\t";
+                temp.print();
     }
-    for (Car& temp : carDeque) {
-        cout << "\t";
-        temp.print();
+        }
     }
     cout << "\n";
 }
