@@ -52,9 +52,38 @@ int main() {
 
             int rng = rand() % 100;
             //pays(leaves), joins, and shifts lanes at the end
+            //prob for paying and leaving
             if (rng < PAYS) {
                 cout << "Lane: " << j + 1 << " Paid: ";
                 //print the car from the front
+                tollBooths[j].pop_front(); //eliminate from teh queue
+            }
+            //prob for joining, works since the first check
+            else if (rng < PAYS + JOINS) {
+                Car new_car = Car();
+                tollBooths[j].push_back(new_car);
+                cout << "Lane: " << j + 1 << " Joined: ";
+                //output
+            }
+            //prob for shifting lanes
+            else {
+                //make sure not empty
+                if (!tollBooths[j].empty()) {
+                    Car lane_changer = tollBooths[j].back();
+                    tollBooths[j].pop_back();
+
+                    int new_lane;
+
+                    while (new_lane == j) {
+                        new_lane = rand() % BOOTHS;
+                    }
+
+                    tollBooths[new_lane].push_back(lane_changer);
+                    cout << "Lane " << j + 1 << " Switched: ";
+                    //output the car
+                    //doesnt need any more output (based on example output)
+                }
+
             }
 
         }
