@@ -15,6 +15,7 @@ const int JOINS = 39;
 const int SHIFTS = 15;
 const int BOOTHS = 4;
 const int TRIALS = 20;
+const int ADDED_TO_EMPTY = 50;
 
 void outputBooths(array<deque<Car>, BOOTHS>);
 
@@ -42,11 +43,14 @@ int main() {
             if (tollBooths[j].empty()) {
                 //if the lane is empty and it still has trials after
                 //then add new car under 50/50 probability
-                if (rand() % 100 < 50) {
+                if (rand() % 100 < ADDED_TO_EMPTY) {
                     Car new_addition = Car();
                     tollBooths[j].push_back(new_addition);
-                    cout << "Lane " << j + 1 << " Joined (Empty Queue): \n";
+                    cout << "Lane " << j + 1 << " Joined (Empty Queue): ";
                     new_addition.print();
+                }
+                else {
+                    cout << "Lane: " << j + 1 << " Remains Empty\n";
                 }
             }
             else { // was not working because it was executing all of this when it should not ahve if it was empty
