@@ -36,10 +36,27 @@ int main() {
 
     //num of trials
     for (int i = 0; i < TRIALS; i++) {
-        cout << "Time: " << i+1 << endl;
+        cout << "Time: " << i + 1 << endl;
         //go thru all toll booths
         for (int j = 0; j < BOOTHS; j++) {
-            if ()
+            if (tollBooths[j].empty() && TRIALS != 19) {
+                //if the lane is empty and it still has trials after
+                //then add new car under 50/50 probability
+                if (rand() % 100 < 50) {
+                    Car new_addition = Car();
+                    tollBooths[j].push_back(new_addition);
+                    cout << "\tLane " << j + 1 << " Joined (Empty Queue): \n";
+                    //fix output so i can print the car that 
+                }
+            }
+
+            int rng = rand() % 100;
+            //pays(leaves), joins, and shifts lanes at the end
+            if (rng < PAYS) {
+                cout << "Lane: " << j + 1 << " Paid: ";
+                //print the car from the front
+            }
+
         }
     }
 
