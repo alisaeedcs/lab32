@@ -1,6 +1,6 @@
-// lab 32 | ali saeed | comsc-210
+// lab 33 | ali saeed | comsc-210
 //ide used: vs code
-//pretty easy assignment( if i did it right)
+//slight more difficult
 
 #include "Car.h"
 #include <iostream>
@@ -39,7 +39,7 @@ int main() {
         cout << "Time: " << i + 1 << endl;
         //go thru all toll booths
         for (int j = 0; j < BOOTHS; j++) {
-            if (tollBooths[j].empty() && TRIALS != 19) {
+            if (tollBooths[j].empty()) {
                 //if the lane is empty and it still has trials after
                 //then add new car under 50/50 probability
                 if (rand() % 100 < 50) {
@@ -49,42 +49,42 @@ int main() {
                     new_addition.print();
                 }
             }
-
-            int rng = rand() % 100;
-            //pays(leaves), joins, and shifts lanes at the end
-            //prob for paying and leaving
-            if (rng < PAYS) {
-                cout << "Lane: " << j + 1 << " Paid: ";
-                tollBooths[j].front().print();
-                tollBooths[j].pop_front(); //eliminate from teh queue
-            }
-            //prob for joining, works since the first check
-            else if (rng < PAYS + JOINS) {
-                Car new_car = Car();
-                tollBooths[j].push_back(new_car);
-                cout << "Lane: " << j + 1 << " Joined: ";
-                new_car.print();
-            }
-            //prob for shifting lanes
-            else {
-                //make sure not empty
-                if (!tollBooths[j].empty()) {
-                    Car lane_changer = tollBooths[j].back();
-                    tollBooths[j].pop_back();
-
-                    int new_lane;
-
-                    //make sure its a different lane, dont wanna stay in the same
-                    while (new_lane == j) {
-                        new_lane = rand() % BOOTHS;
-                    }
-
-                    tollBooths[new_lane].push_back(lane_changer);
-                    cout << "Lane " << j + 1 << " Switched: ";
-                    lane_changer.print();
-                    //doesnt need any more output (based on example output)
+            else { // was not working because it was executing all of this when it should not ahve if it was empty
+                int rng = rand() % 100;
+                //pays(leaves), joins, and shifts lanes at the end
+                //prob for paying and leaving
+                if (rng < PAYS) {
+                    cout << "Lane: " << j + 1 << " Paid: ";
+                    tollBooths[j].front().print();
+                    tollBooths[j].pop_front(); //eliminate from teh queue
                 }
+                //prob for joining, works since the first check
+                else if (rng < PAYS + JOINS) {
+                    Car new_car = Car();
+                    tollBooths[j].push_back(new_car);
+                    cout << "Lane: " << j + 1 << " Joined: ";
+                    new_car.print();
+                }
+                //prob for shifting lanes
+                else {
+                    //make sure not empty
+                    if (!tollBooths[j].empty()) {
+                        Car lane_changer = tollBooths[j].back();
+                        tollBooths[j].pop_back();
 
+                        int new_lane = j;
+
+                        //make sure its a different lane, dont wanna stay in the same
+                        while (new_lane == j) {
+                            new_lane = rand() % BOOTHS;
+                        }
+
+                        tollBooths[new_lane].push_back(lane_changer);
+                        cout << "Lane " << j + 1 << " Switched: ";
+                        lane_changer.print();
+                        //doesnt need any more output (based on example output)
+                    }
+                }
             }
 
         }
@@ -102,12 +102,11 @@ void outputBooths(array<deque<Car>, BOOTHS> tollBooths) {
             cout << " empty\n";
         }
         else {
+            cout << endl;
             for (Car& temp : tollBooths[i]) {
-                cout << endl;
-                cout << "\t";
+                cout << "\t\t";
                 temp.print();
     }
         }
     }
-    cout << "\n";
 }
